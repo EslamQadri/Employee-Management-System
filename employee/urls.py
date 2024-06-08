@@ -9,4 +9,5 @@ urlpatterns = [
     path("employee/", views.EmployeeAPIListView.as_view()),
     path("signup", views.UserSignup.as_view()),
     path("login", views.UserLogin.as_view()),
+    path("User-Info",views.UserInfo),
 ]
