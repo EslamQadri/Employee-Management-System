@@ -42,7 +42,7 @@ class CompanyAPIView(APIView):
         return Response(status=204)
 
 
-class CompanyAPIListView(APIView):
+class CompanyAPIListView(APIView,IsCompanyOwnerOrSuperuser):
 
     def get(self, request, format=None):
         items = Company.objects.order_by("pk")

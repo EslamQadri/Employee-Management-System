@@ -3,9 +3,10 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from department.serializers import DepartmentSerializer
 from department.models import Department
+from company.permissions import IsCompanyOwnerOrSuperuser
 
 
-class DepartmentAPIView(APIView):
+class DepartmentAPIView(APIView,IsCompanyOwnerOrSuperuser):
 
     def get(self, request, id, format=None):
         try:
@@ -35,7 +36,7 @@ class DepartmentAPIView(APIView):
         return Response(status=204)
 
 
-class DepartmentAPIListView(APIView):
+class DepartmentAPIListView(APIView,IsCompanyOwnerOrSuperuser):
 
     def get(self, request, format=None):
         items = Department.objects.order_by('pk')

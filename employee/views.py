@@ -11,9 +11,10 @@ from employee.models import UserAccounts, Employee
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from company.permissions import IsCompanyOwnerOrSuperuser
 
 
-class UserAccountsAPIView(APIView):
+class UserAccountsAPIView(APIView,IsCompanyOwnerOrSuperuser):
 
     def get(self, request, id, format=None):
         try:
@@ -43,7 +44,7 @@ class UserAccountsAPIView(APIView):
         return Response(status=204)
 
 
-class UserAccountsAPIListView(APIView):
+class UserAccountsAPIListView(APIView,IsCompanyOwnerOrSuperuser):
 
     def get(self, request, format=None):
         items = UserAccounts.objects.order_by("pk")
@@ -60,7 +61,7 @@ class UserAccountsAPIListView(APIView):
         return Response(serializer.errors, status=400)
 
 
-class EmployeeAPIView(APIView):
+class EmployeeAPIView(APIView,IsCompanyOwnerOrSuperuser):
 
     def get(self, request, id, format=None):
         try:
@@ -90,7 +91,7 @@ class EmployeeAPIView(APIView):
         return Response(status=204)
 
 
-class EmployeeAPIListView(APIView):
+class EmployeeAPIListView(APIView,IsCompanyOwnerOrSuperuser):
 
     def get(self, request, format=None):
         items = Employee.objects.order_by("pk")
